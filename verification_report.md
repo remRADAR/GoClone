@@ -32,3 +32,9 @@ All runtime imagery is local under `public/assets/`. No secrets, analytics, trac
 ## Known limitations
 
 The reference’s original animation choreography was not fully observable, so GoClone uses restrained CSS transitions and a reduced-motion fallback. Exact proprietary fonts are not assumed. Portfolio cards currently route to the portfolio overview rather than separate detail pages. Production deployment has not been attempted or verified.
+
+## Reference audit pass
+
+A direct desktop comparison against the Fuel homepage identified four material fidelity gaps: the desktop hero CTA sat too low, navigation typography was too large and uppercase, the hero wordmark was narrower and text-rendered, and the testimonial count row was absent. These were corrected by moving the desktop CTA to the upper-left third, reducing navigation scale, using the captured wide wordmark asset, and adding the 122+/257+/315+ count row above the percentage metrics.
+
+Updated captures were checked at 893×768 and 390×844. The desktop composition now keeps the full reference-style navigation and CEO card visible, while the mobile composition retains the compact Menu control and avoids horizontal overflow. Remaining differences are intentional or unverified: exact animation choreography, proprietary font micro-metrics, and the Framer attribution badge.

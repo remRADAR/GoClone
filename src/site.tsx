@@ -205,7 +205,7 @@ function Hero() {
         <PlusMark />
       </div>
       <div className="hero-wordmark">
-        FUEL<span>×</span>
+        <img src="/assets/footer-wordmark.png" alt="Fuel" />
       </div>
       <div className="hero-footnote">
         <span>© 2025</span>
@@ -486,21 +486,37 @@ function TestimonialSection() {
             <span>NovaLabs / Creative Lead</span>
           </div>
         </div>
-        <div className="testimonial-metrics">
-          <div>
-            <b>99%</b>
-            <span>Success rate</span>
-            <small>Reliable execution</small>
+        <div className="testimonial-side">
+          <div className="testimonial-counts" aria-label="Selected project counts">
+            <div>
+              <b>122+</b>
+              <span>Success rate</span>
+            </div>
+            <div>
+              <b>257+</b>
+              <span>Reliable execution</span>
+            </div>
+            <div>
+              <b>315+</b>
+              <span>Client satisfaction</span>
+            </div>
           </div>
-          <div>
-            <b>84%</b>
-            <span>Client satisfaction</span>
-            <small>Seamless delivery</small>
-          </div>
-          <div>
-            <b>94%</b>
-            <span>Repeat work</span>
-            <small>Trusted partnership</small>
+          <div className="testimonial-metrics">
+            <div>
+              <b>99%</b>
+              <span>Success rate</span>
+              <small>Reliable execution</small>
+            </div>
+            <div>
+              <b>84%</b>
+              <span>Client satisfaction</span>
+              <small>Seamless delivery</small>
+            </div>
+            <div>
+              <b>94%</b>
+              <span>Repeat work</span>
+              <small>Trusted partnership</small>
+            </div>
           </div>
         </div>
       </div>
