@@ -5,37 +5,52 @@ import "animate.css";
 
 const navItems = [
   { label: "Home", index: "01", to: "/" as const },
-  { label: "Portfolio", index: "02", to: "/work/portfolio" as const },
-  { label: "About", index: "03", to: "/about" as const },
+  { label: "On The Radar", index: "02", to: "/work/portfolio" as const },
+  { label: "Motherland", index: "03", to: "/about" as const },
   { label: "Contact", index: "04", to: "/contact" as const },
 ];
+
+const footerLinks = [
+  ["Home", "/"],
+  ["Charts", "/#charts"],
+  ["On The Radar", "/work/portfolio"],
+  ["Magazine", "/work/portfolio#magazine"],
+  ["RADARMusic", "/#radarmusic"],
+  ["Motherland", "/about"],
+  ["Spotlights", "/#spotlights"],
+  ["Platforms", "/#platforms"],
+  ["Playlists", "/#playlists"],
+  ["Store", "/contact#store"],
+  ["About", "/about"],
+  ["Contact", "/contact"],
+] as const;
 
 const projects = [
   {
     number: "01",
-    title: "Vellfire Calibration",
-    category: "Art Direction",
-    year: "2025",
+    title: "The next voice is already here",
+    category: "Discovery",
+    year: "2026",
     image: "/assets/project-vellfire.png",
   },
   {
     number: "02",
-    title: "Dunwill Lanson",
-    category: "Photography",
-    year: "2024",
+    title: "Protect the Music",
+    category: "RADAR point of view",
+    year: "2026",
     image: "/assets/project-dunwill.png",
   },
   {
     number: "03",
-    title: "Noara Willis",
-    category: "Strategy",
-    year: "2025",
+    title: "Culture in motion",
+    category: "Motherland",
+    year: "2026",
     image: "/assets/project-noara.png",
   },
   {
     number: "04",
-    title: "Nike Studios",
-    category: "Art Direction",
+    title: "Moov Different",
+    category: "RADARMusic",
     year: "2025",
     image: "/assets/project-nike.png",
   },
@@ -43,29 +58,38 @@ const projects = [
 
 const faqs = [
   {
-    question: "What distinguishes us from other agencies?",
+    question: "What is RADARCharts?",
     answer:
-      "Fuel pairs a focused creative partner with a structured, transparent rhythm. You get senior thinking, a clear queue, and a system that keeps the work moving.",
+      "RADARCharts is a music and culture platform that brings charts, editorial, discovery, playlists, and community closer together.",
   },
   {
-    question: "Why not hire an in-house designer or freelancer?",
+    question: "How does an artist get on the RADAR?",
     answer:
-      "We give teams the continuity of a dedicated creative without the overhead of a full-time hire, while keeping the perspective fresh and the process accountable.",
+      "Submit a release, story, profile, or campaign through the contact page. Include the clearest link and the reason the signal matters now.",
   },
   {
-    question: "Are creative requests truly unlimited?",
+    question: "Do you only cover music?",
     answer:
-      "Requests are handled one at a time so every deliverable receives real attention. Add work to the queue whenever you are ready and we will keep the next priority visible.",
+      "Music is the centre of gravity, but the RADAR also follows the people, scenes, ideas, and movements that give the sound its meaning.",
   },
   {
-    question: "How fast will I receive my work?",
+    question: "What is The MOTHERLand?",
     answer:
-      "Most focused requests return within a few business days. Larger identity, campaign, and production work gets a clear schedule before kickoff.",
+      "The MOTHERLand is a RADARCharts cultural sanctuary dedicated to uplifting women in entertainment and amplifying the artists, storytellers, and culture-shapers moving the future forward.",
   },
   {
-    question: "What if I have a single project?",
+    question: "Can brands and partners work with RADARCharts?",
     answer:
-      "That is welcome. Start with a focused engagement and we will shape the right scope around the outcome you need, without forcing a long retainer.",
+      "Yes. Partners can enter through editorial features, artist spotlights, release campaigns, platform collaborations, or other culture-led opportunities.",
+  },
+  {
+    question: "Where can I find the charts and playlists?",
+    answer: "Use Charts, Playlists, RADARMusic, and Magazine to stay close to the latest signals.",
+  },
+  {
+    question: "Is RADARCharts accepting submissions?",
+    answer:
+      "Yes. Use the contact page to submit the details of your release, story, or partnership.",
   },
 ];
 
@@ -101,11 +125,11 @@ function applyRevealAnimation(element: HTMLElement) {
 export function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const location = useLocation();
-
   return (
     <header className="site-header">
-      <Link to="/" className="brand-lockup" aria-label="GoClone home">
-        <img src="/assets/fuel-logo.png" alt="Fuel" />
+      <Link to="/" className="brand-lockup" aria-label="RADARCharts home">
+        <span className="brand-name">RADARCharts</span>
+        <small>by REM</small>
       </Link>
       <nav
         id="primary-navigation"
@@ -126,11 +150,11 @@ export function Header() {
         ))}
       </nav>
       <Link to="/contact" className="ceo-card">
-        <img src="/assets/ceo-portrait.png" alt="Lousiana KD6" />
+        <img src="/assets/ceo-portrait.png" alt="RADARCharts signal portrait" />
         <span className="ceo-card-copy">
-          <b>Meet the CEO</b>
-          <strong>Lousiana KD6</strong>
-          <small>CEO</small>
+          <b>RADARMusic</b>
+          <strong>The RADAR never sleeps</strong>
+          <small>by REM</small>
         </span>
         <span className="card-corner" aria-hidden="true">
           <ArrowUp size={14} strokeWidth={1.5} />
@@ -161,37 +185,40 @@ export function Footer() {
       <div className="footer-top section-grid" data-reveal data-animation="fadeInUp">
         <span className="section-kicker">(10)</span>
         <div className="footer-cta" data-motion="fadeInUp">
-          <p className="eyebrow">Let’s work together</p>
-          <a className="footer-email" href="mailto:sayhi@goclone.studio">
-            sayhi@goclone.studio <Arrow />
+          <p className="eyebrow">Stay close to culture.</p>
+          <a className="footer-email" href="mailto:hello@radarcharts.net">
+            hello@radarcharts.net <Arrow />
           </a>
           <Link className="text-link" to="/contact">
-            Contact now <Arrow />
+            Enter the conversation <Arrow />
           </Link>
         </div>
       </div>
       <div className="footer-marquee" data-motion="fadeIn" aria-hidden="true">
-        <span>We are faster, better and closer&nbsp;—&nbsp;</span>
-        <span>We are faster, better and closer&nbsp;—&nbsp;</span>
+        <span>The RADAR never sleeps&nbsp;—&nbsp;</span>
+        <span>The RADAR never sleeps&nbsp;—&nbsp;</span>
       </div>
       <div className="footer-bottom">
         <Link to="/" className="footer-wordmark">
-          FUEL
-          <span className="wordmark-mark" aria-hidden="true">
-            <X size={19} strokeWidth={1.5} />
-          </span>
+          RADARCharts
+          <span className="wordmark-by">by REM</span>
         </Link>
         <nav className="footer-nav" aria-label="Footer navigation">
-          {navItems.map((item) => (
-            <Link key={item.to} to={item.to}>
-              <span>{item.label}</span>
-              <small>{item.index}</small>
-            </Link>
+          {footerLinks.map(([label, href], index) => (
+            <a key={label} href={href}>
+              <span>{label}</span>
+              <small>{String(index + 1).padStart(2, "0")}</small>
+            </a>
           ))}
         </nav>
         <p>
-          © 2025 <span className="footer-rule" /> 19′
+          © 2026 <span className="footer-rule" /> REM / RADARCharts
         </p>
+      </div>
+      <div className="footer-signature">
+        <strong>Music is life itself.</strong>
+        <span>Protect the Music. Protect the Fans.</span>
+        <small>The RADAR never sleeps.</small>
       </div>
     </footer>
   );
@@ -202,12 +229,10 @@ export function AppShell({ children }: { children: ReactNode }) {
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const revealTargets = Array.from(document.querySelectorAll<HTMLElement>("[data-reveal]"));
     document.documentElement.classList.add("reveal-ready", "motion-ready");
-
     if (reduceMotion || !("IntersectionObserver" in window)) {
       revealTargets.forEach(applyRevealAnimation);
       return () => document.documentElement.classList.remove("reveal-ready", "motion-ready");
     }
-
     const observer = new IntersectionObserver(
       (entries) =>
         entries.forEach((entry) => {
@@ -224,11 +249,9 @@ export function AppShell({ children }: { children: ReactNode }) {
       document.documentElement.classList.remove("reveal-ready", "motion-ready");
     };
   }, []);
-
   useEffect(() => {
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (reduceMotion) return;
-
     const stackContainer = document.querySelector<HTMLElement>("[data-stack-container]");
     const stackItems = Array.from(document.querySelectorAll<HTMLElement>("[data-stack-item]"));
     let frame = 0;
@@ -238,7 +261,6 @@ export function AppShell({ children }: { children: ReactNode }) {
         "--scroll-progress",
         String(Math.min(window.scrollY / Math.max(window.innerHeight, 1), 1)),
       );
-
       const stackRect = stackContainer?.getBoundingClientRect();
       const stackStart = stackRect ? stackRect.top + window.scrollY : 0;
       const stackTravel = Math.max(
@@ -249,7 +271,6 @@ export function AppShell({ children }: { children: ReactNode }) {
       const cardHeight = Math.max(stackItems[0]?.offsetHeight ?? window.innerHeight, 1);
       const stackScroll = Math.max(0, window.scrollY - stackStart);
       stackContainer?.style.setProperty("--stack-progress", stackProgress.toFixed(3));
-
       stackItems.forEach((item, index) => {
         const stickyTop = Number.parseFloat(getComputedStyle(item).top) || 0;
         const rect = item.getBoundingClientRect();
@@ -275,7 +296,6 @@ export function AppShell({ children }: { children: ReactNode }) {
       });
     };
   }, []);
-
   return (
     <div className="site-shell">
       <Header />
@@ -290,22 +310,25 @@ function Hero() {
     <section data-reveal data-animation="zoomIn" className="hero hero-home">
       <div className="hero-grain" />
       <div className="hero-copy" data-motion="fadeInUp">
-        <p>
-          Pick a plan, submit a job request,
+        <span className="eyebrow">RADARCharts by REM</span>
+        <h1 className="hero-title">
+          Music is life itself.
           <br />
-          and your イメージ will kickoff
+          <em>Protect the Music.</em>
           <br />
-          <span>within 24 hours.</span>
-        </p>
-        <Link className="hero-link" to="/about">
-          Explore now <Arrow />
+          Protect the Fans.
+        </h1>
+        <Link className="hero-link" to="/work/portfolio">
+          Enter the RADAR <Arrow />
         </Link>
       </div>
       <div className="hero-services" data-motion="fadeIn">
-        <span>01/</span>
-        <span>Strategy</span>
-        <span>Videography</span>
-        <span>Branding</span>
+        <span>Artists</span>
+        <span>Makama</span>
+        <span>Odenose</span>
+        <span>KEASUNGS</span>
+        <span>Moelogo</span>
+        <span>TELMAN</span>
       </div>
       <div className="hero-plus plus-one">
         <PlusMark />
@@ -317,12 +340,13 @@ function Hero() {
         <PlusMark />
       </div>
       <div className="hero-wordmark" data-motion="fadeIn">
-        <img src="/assets/footer-wordmark.png" alt="Fuel" />
+        <span className="hero-wordmark-name">RADARCharts</span>
+        <small>by REM</small>
       </div>
       <div className="hero-footnote">
-        <span>© 2025</span>
+        <span>01 / 05</span>
         <span className="tick-line" />
-        <span>19′</span>
+        <span>TELMAN — Moov Different</span>
       </div>
     </section>
   );
@@ -344,7 +368,7 @@ function SectionIntro({
       <div className="section-intro-meta">
         <span>({number})</span>
         <span>({label})</span>
-        <span>© 2025</span>
+        <span>© 2026</span>
       </div>
       {children}
     </div>
@@ -355,41 +379,41 @@ function AboutSection() {
   return (
     <section data-reveal className="about-section section-dark">
       <div className="section-grid">
-        <SectionIntro number="01" label="About us" dark />
+        <SectionIntro number="01" label="About the movement" dark />
         <div className="about-statement" data-motion="fadeInUp">
           <p className="display-copy">
-            Design-forward impressive agency crafting bold visuals, structured layouts, and
-            high-impact digital 3D Swiss inspired by modern aesthetics<span>®</span>.
+            A radar for
+            <br />
+            <em>culture in motion.</em>
           </p>
           <div className="about-columns">
             <div>
-              <span className="muted-label">(Pre)</span>
+              <span className="muted-label">Find the signal</span>
               <p>
-                Igniting ideas with precision and intentional design. Fuel transforms raw creativity
-                into structured visual systems that shape brands and elevate digital experiences.
+                We look beyond the obvious and make room for the artists moving culture forward.
               </p>
             </div>
             <div>
-              <span className="muted-label">(+Post)</span>
+              <span className="muted-label">Give it context</span>
               <p>
-                Driven by bold aesthetics and functional simplicity. Fuel blends modern form with
-                purposeful detail, delivering refined experiences that push brands forward.
+                A release is never just a release. We connect the sound to the story, the scene, and
+                the people behind it.
+              </p>
+            </div>
+            <div>
+              <span className="muted-label">Protect the connection</span>
+              <p>
+                Culture is participation, not decoration. RADARCharts brings artists, fans, and
+                partners closer together.
               </p>
             </div>
           </div>
-          <div className="result-row">
-            <span className="muted-label">(=Results)</span>
-            <div>
-              <b>15</b>
-              <small>New clients</small>
-            </div>
-            <div>
-              <b>100%</b>
-              <small>Success rate</small>
-            </div>
-          </div>
+          <p className="about-closing">
+            From the first listen to the full story, RADARCharts brings music and culture closer
+            together.
+          </p>
           <Link className="text-link" to="/about">
-            Explore now <Arrow />
+            Enter Motherland <Arrow />
           </Link>
         </div>
       </div>
@@ -399,17 +423,27 @@ function AboutSection() {
 
 function PortfolioSection() {
   return (
-    <section data-reveal className="portfolio-section section-paper">
+    <section data-reveal id="charts" className="portfolio-section section-paper">
       <div className="section-grid">
-        <SectionIntro number="02" label="Portfolio" />
+        <SectionIntro number="02" label="Latest signals" />
       </div>
       <div className="portfolio-heading" data-motion="zoomIn">
         <h2>
-          Selected
+          What’s moving
           <br />
-          <em>work</em>
+          <em>now.</em>
         </h2>
-        <p>A curated collection of structured visuals and modern digital systems.</p>
+        <p>
+          The RADAR is always listening. Explore the artists, tracks, releases, and cultural moments
+          currently carrying the signal forward.
+        </p>
+      </div>
+      <div className="chart-lead" data-motion="fadeInUp">
+        <strong>TOP 25</strong>
+        <p>The current RADARCharts ranking of the music and voices shaping the conversation.</p>
+        <span className="chart-groups">
+          The front line · Rising frequency · Across the map · Deep signal · Worth another listen
+        </span>
       </div>
       <div className="project-grid">
         {projects.map((project) => (
@@ -417,11 +451,11 @@ function PortfolioSection() {
         ))}
       </div>
       <div className="section-action" data-motion="fadeInUp">
-        <Link className="button-outline" to="/contact">
-          Join us now <Arrow />
+        <Link className="button-outline" to="/work/portfolio">
+          Explore all charts <Arrow />
         </Link>
         <Link className="text-link" to="/work/portfolio">
-          See all (07) <Arrow />
+          On The Radar <Arrow />
         </Link>
       </div>
     </section>
@@ -432,7 +466,7 @@ function ProjectCard({ project }: { project: (typeof projects)[number] }) {
   return (
     <Link className="project-card" data-motion="fadeInUp" to="/work/portfolio">
       <div className="project-image" data-motion="zoomIn">
-        <img src={project.image} alt="" loading="lazy" />
+        <img src={project.image} alt={`${project.title} — ${project.category}`} loading="lazy" />
         <span className="project-arrow">
           <Arrow />
         </span>
@@ -453,48 +487,44 @@ function ServicesSection() {
   const services = [
     {
       number: "01",
-      title: "Art Direction",
-      label: "Creative Oversight",
+      title: "Charts",
+      label: "A clear pulse",
       image: "/assets/service-art-direction.png",
-      body: "Guiding visual identity through clarity and intentional design. Fuel shapes cohesive narratives that elevate brands beyond aesthetics, creating timeless expressions with edge.",
+      body: "A clear pulse on the artists, songs, releases, and scenes gaining momentum. Includes Top 25, new entries, and regional signals.",
     },
     {
       number: "02",
-      title: "Photography",
-      label: "Brand Imaging",
+      title: "Editorial",
+      label: "Give it context",
       image: "/assets/service-photography.png",
-      body: "Crafting imagery with mood, precision, and emotional depth. Fuel captures moments that feel curated and purposeful, transforming simple visuals into powerful brand stories.",
+      body: "Interviews, stories, reviews, and cultural notes that give the music a wider frame. Includes On The Radar, Magazine, and Discovery.",
     },
     {
       number: "03",
-      title: "Strategy",
-      label: "Concept Frameworks",
+      title: "Platform support",
+      label: "Move attention",
       image: "/assets/service-strategy.png",
-      body: "Structuring ideas with insight, direction, and clarity. Fuel builds thoughtful frameworks that define positioning, strengthen identity, and move brands toward long-term impact.",
+      body: "Campaign visibility and cultural strategy for artists, labels, brands, and partners. Includes artist spotlights, release campaigns, and partner features.",
     },
   ];
-
   return (
-    <section data-reveal className="services-section section-dark">
+    <section data-reveal id="platforms" className="services-section section-dark">
       <div className="section-grid">
-        <SectionIntro number="03" label="Premium services" dark />
+        <SectionIntro number="03" label="The platform" dark />
       </div>
       <div className="services-lead" data-motion="fadeInUp">
-        <h2
-          className="split-title"
-          aria-label="Design-driven studio delivering the structured visuals, refined digital system, and high-impact brand experiences shaped by aesthetics & Fuel®."
-        >
-          <span className="text-part left">
-            Design-driven studio delivering the structured visuals,
-          </span>
-          <span className="text-part right">
-            refined digital system, and high-impact brand experiences
-          </span>{" "}
-          <em>shaped by aesthetics &amp; Fuel®.</em>
+        <h2 className="split-title" aria-label="More than a music chart.">
+          <span className="text-part left">More than a</span>{" "}
+          <span className="text-part right">music chart.</span>
         </h2>
-        <Link className="text-link" to="/about">
-          Explore more <Arrow />
-        </Link>
+        <p className="platform-lead-copy">
+          RADARCharts connects discovery, editorial, community, and creative support in one living
+          platform. Every part of the experience moves attention toward the people and ideas worth
+          hearing.
+        </p>
+        <span className="platform-closing">
+          A signal is stronger when the right people can find it.
+        </span>
       </div>
       <div className="service-list service-stack" data-stack-container>
         {services.map((service) => (
@@ -505,7 +535,7 @@ function ServicesSection() {
             key={service.number}
           >
             <div className="service-index">{service.number}</div>
-            <img src={service.image} alt="" loading="lazy" data-motion="fadeIn" />
+            <img src={service.image} alt={service.title} loading="lazy" data-motion="fadeIn" />
             <div className="service-copy" data-motion="fadeInUp">
               <h3>{service.title}</h3>
               <span>{service.label}</span>
@@ -519,71 +549,49 @@ function ServicesSection() {
 }
 
 function PricingSection() {
-  const plans = [
+  const paths = [
     {
-      name: "Starter",
-      price: "999",
-      description: "Essential design support for new brands taking the first step.",
-      features: [
-        "Custom-crafted visual identity",
-        "Responsive, modern website design",
-        "High-quality imagery and production",
-      ],
+      name: "I am an artist",
+      description: "Put your release, story, or movement in front of a culture-first audience.",
+      cta: "Submit your signal",
+      features: ["Page Post", "Artist Spotlight", "Release Campaign"],
     },
     {
-      name: "Professional",
-      price: "7299",
-      description: "Ideal for brands seeking refined systems and digital presence.",
-      features: [
-        "Custom-crafted visual identity",
-        "Responsive, modern website design",
-        "High-quality imagery and production",
-        "Structured layouts with clean typography",
-        "Conversion-focused page strategy",
-        "Fast, optimized performance setup",
-      ],
+      name: "I am a partner",
+      description: "Build a meaningful connection with the music and communities shaping culture.",
+      cta: "Start a conversation",
+      features: ["Partner Feature", "Premium Campaign", "Platform Support"],
     },
     {
-      name: "Elite",
-      price: "10999",
-      description: "High-touch and a fully crafted brand experience by Fuel.",
-      features: [
-        "Custom-crafted visual identity",
-        "Responsive, modern website design",
-        "High-quality imagery and production",
-        "Structured layouts with clean typography",
-        "Conversion-focused page strategy",
-        "Fast, optimized performance setup",
-        "Seamless CMS and organization",
-        "Dedicated support for revisions",
-      ],
+      name: "I am a fan",
+      description: "Stay close to the charts, stories, playlists, and voices worth your time.",
+      cta: "Follow the signal",
+      features: ["Charts", "Playlists", "Magazine"],
     },
   ];
-
   return (
     <section data-reveal className="pricing-section section-paper">
       <div className="section-grid">
-        <SectionIntro number="04" label="Pricing" />
+        <SectionIntro number="04" label="Ways to enter the signal" />
       </div>
       <div className="pricing-grid">
-        {plans.map((plan) => (
-          <article className="pricing-card" data-motion="fadeInUp" key={plan.name}>
+        {paths.map((path, index) => (
+          <article className="pricing-card" data-motion="fadeInUp" key={path.name}>
             <div className="pricing-card-top">
-              <span className="muted-label">{plan.name}</span>
-              <p>{plan.description}</p>
+              <span className="muted-label">{path.name}</span>
+              <p>{path.description}</p>
             </div>
             <div className="price">
-              <span>$</span>
-              <b>{plan.price}</b>
-              <small>/ Month</small>
+              <b>0{index + 1}</b>
+              <small>signal</small>
             </div>
             <Link className="button-dark" to="/contact">
-              Join us now <Arrow />
+              {path.cta} <Arrow />
             </Link>
             <div className="included">
-              <span>What’s included</span>
+              <span>RADARStore / service names</span>
               <ul>
-                {plan.features.map((feature) => (
+                {path.features.map((feature) => (
                   <li key={feature}>{feature}</li>
                 ))}
               </ul>
@@ -591,6 +599,10 @@ function PricingSection() {
           </article>
         ))}
       </div>
+      <p className="signal-note">
+        No gatekeeping theatre. No empty reach claims. Just a clearer path between the music and the
+        people ready to hear it.
+      </p>
     </section>
   );
 }
@@ -599,48 +611,46 @@ function TestimonialSection() {
   return (
     <section data-reveal className="testimonial-section section-dark">
       <div className="section-grid">
-        <SectionIntro number="05" label="Testimonial" dark />
+        <SectionIntro number="05" label="Voices on the RADAR" dark />
       </div>
       <div className="testimonial-layout" data-motion="fadeInUp">
         <div className="testimonial-quote">
-          “Fuel delivered with clarity. Their structured workflow and fast turnaround made our
-          redesign launch seamless. They’ve become our trusted partner for every major creative
-          push.”
+          “The right story can change the way a listener hears the music.”
           <div className="testimonial-author">
-            <strong>Adrian Velasco</strong>
-            <span>NovaLabs / Creative Lead</span>
+            <strong>RADARCharts by REM</strong>
+            <span>Artists, fans, and communities in motion</span>
           </div>
         </div>
         <div className="testimonial-side">
-          <div className="testimonial-counts" aria-label="Selected project counts">
+          <div className="testimonial-counts" aria-label="RADARCharts principles">
             <div>
-              <b>122+</b>
-              <span>Success rate</span>
+              <b>Signal</b>
+              <span>Signals surfaced</span>
             </div>
             <div>
-              <b>257+</b>
-              <span>Reliable execution</span>
+              <b>Story</b>
+              <span>Stories and releases tracked</span>
             </div>
             <div>
-              <b>315+</b>
-              <span>Client satisfaction</span>
+              <b>Community</b>
+              <span>Culture-led connections</span>
             </div>
           </div>
           <div className="testimonial-metrics">
             <div>
-              <b>99%</b>
-              <span>Success rate</span>
-              <small>Reliable execution</small>
+              <b>Listen</b>
+              <span>Artists bring the sound</span>
+              <small>Communities give it life</small>
             </div>
             <div>
-              <b>84%</b>
-              <span>Client satisfaction</span>
-              <small>Seamless delivery</small>
+              <b>Context</b>
+              <span>Stories widen the frame</span>
+              <small>Every signal has a place</small>
             </div>
             <div>
-              <b>94%</b>
-              <span>Repeat work</span>
-              <small>Trusted partnership</small>
+              <b>Protect</b>
+              <span>Music is life itself</span>
+              <small>Protect the Music &amp; Protect the Fans</small>
             </div>
           </div>
         </div>
@@ -650,11 +660,18 @@ function TestimonialSection() {
 }
 
 function ArchiveSection() {
-  const entries = ["Outside", "Juvede", "Zaine", "Wall Out", "Geaton", "Skate"];
+  const entries = [
+    ["2026", "On The Radar", "Current editorial"],
+    ["2026", "Motherland", "Culture and movement"],
+    ["2025", "RADARMusic", "Sound and playlist"],
+    ["2025", "Discovery", "New voices"],
+    ["2025", "Magazine", "Long-form culture"],
+    ["2024", "The RADARMan", "People and perspective"],
+  ];
   return (
     <section data-reveal className="archive-section section-paper">
       <div className="section-grid">
-        <SectionIntro number="06" label="Archive" />
+        <SectionIntro number="06" label="The archive" />
       </div>
       <div className="archive-head">
         <h2>
@@ -662,17 +679,21 @@ function ArchiveSection() {
           <br />
           <em>signals</em>
         </h2>
+        <p className="archive-copy">
+          The archive is not behind us. It is a map of the sounds, people, and ideas that continue
+          to shape the present.
+        </p>
         <Link className="text-link" to="/work/portfolio">
-          Contact now <Arrow />
+          Open the editorial archive <Arrow />
         </Link>
       </div>
       <div className="archive-list">
-        {entries.map((entry, index) => (
-          <div key={entry} className="archive-entry" data-motion="fadeInLeft">
-            <span>{index % 2 === 0 ? "2025" : "2024"}</span>
-            <strong>{entry}</strong>
+        {entries.map(([year, title, category]) => (
+          <div key={title} className="archive-entry" data-motion="fadeInLeft">
+            <span>{year}</span>
+            <strong>{title}</strong>
             <small>
-              View case <Arrow />
+              {category} <Arrow />
             </small>
           </div>
         ))}
@@ -684,30 +705,37 @@ function ArchiveSection() {
 function StatsSection() {
   const stats = [
     [
-      "2.06M",
-      "Global impressions",
-      "Fuel moves beyond simple authenticity, creating refined systems that shape digital presence.",
+      "Artists",
+      "Artists in motion",
+      "The people creating the next signal remain at the centre of the story.",
     ],
     [
-      "160K",
-      "Community reach",
-      "Elevating identity with structured clarity. Fuel crafts experiences that extend far beyond visual form.",
+      "Stories",
+      "Stories published",
+      "Editorial keeps the sound connected to its scene, history, and community.",
     ],
     [
-      "750+",
-      "Creative hours logged",
-      "Through precision and intention, Fuel transforms ideas into cohesive narratives that define brands.",
+      "Fans",
+      "Fans reached",
+      "Discovery matters when it creates a real connection between music and people.",
     ],
     [
-      "257+",
-      "Projects completed",
-      "Blending modern aesthetics with functional design, Fuel delivers refined solutions that push brands.",
+      "Signals",
+      "Signals tracked",
+      "The numbers help us see movement. They do not replace the people who create it.",
     ],
   ];
   return (
     <section data-reveal className="stats-section section-dark">
       <div className="section-grid">
-        <SectionIntro number="07" label="Stats" dark />
+        <SectionIntro number="07" label="Signal" dark />
+      </div>
+      <div className="stats-intro" data-motion="fadeInUp">
+        <h2>
+          Measure the reach.
+          <br />
+          <em>Respect the culture.</em>
+        </h2>
       </div>
       <div className="stats-grid">
         {stats.map(([value, label, body]) => (
@@ -724,15 +752,15 @@ function StatsSection() {
 
 function ArticlesSection() {
   const articles = [
-    ["001", "Velocity Becomes", "Art Direction"],
-    ["002", "Way To Clearance", "Books"],
-    ["003", "All Grapples", "Automotive"],
-    ["004", "Flowers Love", "Gardening"],
+    ["001", "The sound of the next room", "Discovery"],
+    ["002", "Protect the Music", "RADAR point of view"],
+    ["003", "Motherland: voices that move culture", "Motherland"],
+    ["004", "Moov Different", "RADARMusic"],
   ];
   return (
     <section data-reveal className="articles-section section-paper">
       <div className="section-grid">
-        <SectionIntro number="08" label="Article" />
+        <SectionIntro number="08" label="Editorial signal" />
       </div>
       <div className="article-list">
         {articles.map(([number, title, category]) => (
@@ -744,6 +772,14 @@ function ArticlesSection() {
           </Link>
         ))}
       </div>
+      <div className="section-action article-actions" data-motion="fadeInUp">
+        <Link className="text-link" to="/work/portfolio">
+          Read all stories <Arrow />
+        </Link>
+        <Link className="text-link" to="/work/portfolio">
+          NOW READING... <Arrow />
+        </Link>
+      </div>
     </section>
   );
 }
@@ -753,13 +789,13 @@ export function FAQSection({ dark = true }: { dark?: boolean }) {
   return (
     <section data-reveal className={`faq-section ${dark ? "section-dark" : "section-paper"}`}>
       <div className="section-grid">
-        <SectionIntro number="09" label="Frequently asked questions" dark={dark} />
+        <SectionIntro number="09" label="Questions about RADARCharts" dark={dark} />
       </div>
       <div className="faq-layout">
         <div className="faq-media" data-motion="fadeInLeft">
-          <img src="/assets/faq-portrait.png" alt="Portrait with a soft blue flower" />
+          <img src="/assets/faq-portrait.png" alt="A cultural portrait with a soft blue flower" />
           <a href="https://www.youtube.com/" target="_blank" rel="noreferrer" className="showreel">
-            Play showreel <Arrow />
+            Watch the RADARCharts showreel <Arrow />
           </a>
         </div>
         <div className="faq-list" data-motion="fadeInRight">
@@ -819,23 +855,44 @@ export function PortfolioPage() {
       <main>
         <section data-reveal data-animation="zoomIn" className="subpage-hero portfolio-hero">
           <div className="subpage-hero-copy">
-            <span className="eyebrow">Latest (07)</span>
+            <span className="eyebrow">Latest signal</span>
             <h1>
-              Latest
+              On The
               <br />
-              <em>Portfolio</em>
+              <em>RADAR</em>
             </h1>
-            <p>A curated collection of structured visuals and modern digital systems.</p>
+            <p>
+              The latest artists, releases, stories, and cultural movements worth your attention.
+            </p>
           </div>
         </section>
-        <section data-reveal className="portfolio-index section-paper">
+        <section data-reveal className="portfolio-index section-paper" id="magazine">
           <div className="section-grid">
-            <SectionIntro number="01" label="Portfolio" />
+            <SectionIntro number="01" label="The signal, in full" />
+          </div>
+          <div className="portfolio-heading" data-motion="zoomIn">
+            <h2>
+              The signal,
+              <br />
+              <em>in full.</em>
+            </h2>
+            <p>
+              A current record of what is moving across music and culture. Read deeply, listen
+              widely, and return often.
+            </p>
           </div>
           <div className="project-grid project-grid-index">
             {projects.map((project) => (
               <ProjectCard key={project.number} project={project} />
             ))}
+          </div>
+          <div className="section-action" data-motion="fadeInUp">
+            <Link className="button-outline" to="/contact">
+              Open the Magazine <Arrow />
+            </Link>
+            <Link className="text-link" to="/work/portfolio">
+              Keep listening. <Arrow />
+            </Link>
           </div>
         </section>
         <FAQSection dark />
@@ -844,76 +901,136 @@ export function PortfolioPage() {
   );
 }
 
-const processSteps = [
+type MotherlandFilter = "all" | "voices" | "soundtrack" | "culture";
+
+const motherlandSignals = [
   {
-    number: "001",
-    title: "Research",
-    body: "Exploring insights through structured analysis and clear intention. Fuel uncovers patterns and direction, creating a grounded foundation that shapes purposeful design decisions.",
-    features: [
-      "Market discovery & visual mapping",
-      "Brand positioning review",
-      "Dedicated creative, 20 hrs weekly",
-    ],
+    number: "01",
+    filter: "voices" as const,
+    title: "The movement",
+    body: "The MOTHERLand is a cultural sanctuary dedicated to uplifting, uniting, and unleashing the full potential of women in entertainment. It honours the resilience, brilliance, and influence of female artists, storytellers, visionaries, and culture-shapers.",
+    features: ["Female artists", "Storytellers", "Culture-shapers"],
   },
   {
-    number: "002",
-    title: "Experiment",
-    body: "Translating ideas into visual concepts with clarity, balance, and exploration. Fuel moves beyond predictable form, crafting variations that reveal new creative possibilities.",
-    features: [
-      "Concept sketches & directions",
-      "Visual style development",
-      "Dedicated creative, 20 hrs weekly",
-    ],
+    number: "02",
+    filter: "soundtrack" as const,
+    title: "The soundtrack",
+    body: "Listen to the women, artists, and culture-shapers moving the signal forward. Protect the music. Protect the fans. The soundtrack of the movement is always changing.",
+    features: ["Featured voice", "New movement", "The next sound"],
   },
   {
-    number: "003",
-    title: "Refinement",
-    body: "Polishing every detail with precision and structure. Fuel refines layout, tone, and expression, delivering a cohesive system shaped for clarity and long-term impact.",
-    features: [
-      "Final design adjustments",
-      "System-wide consistency check",
-      "Dedicated creative, 20 hrs weekly",
-    ],
+    number: "03",
+    filter: "culture" as const,
+    title: "Culture in motion",
+    body: "From the frontlines of music and media to the stages of innovation and leadership, The MOTHERLand exists to amplify her voice, celebrate her journey, and support her rise.",
+    features: ["Her voice", "Her journey", "Her future"],
+  },
+  {
+    number: "04",
+    filter: "culture" as const,
+    title: "The next room",
+    body: "A living space for the artists, producers, writers, and culture-shapers making room for what comes next. The signal grows when more voices can enter it.",
+    features: ["New voices", "Shared stages", "Future makers"],
   },
 ];
 
+const motherlandFilters: Array<{ id: MotherlandFilter; label: string }> = [
+  { id: "all", label: "All signals" },
+  { id: "voices", label: "Voices" },
+  { id: "soundtrack", label: "Soundtrack" },
+  { id: "culture", label: "Culture" },
+];
+
 export function AboutPage() {
+  const [activeFilter, setActiveFilter] = useState<MotherlandFilter>("all");
+  const visibleSignals = motherlandSignals.filter(
+    (signal) => activeFilter === "all" || signal.filter === activeFilter,
+  );
+
   return (
     <AppShell>
       <main>
         <section data-reveal data-animation="zoomIn" className="subpage-hero about-hero">
           <div className="subpage-hero-copy">
-            <span className="eyebrow">Our studio</span>
+            <span className="eyebrow">A RADARCharts cultural sanctuary</span>
             <h1>
-              We are
+              The
               <br />
-              <em>here.</em>
+              <em>MOTHERLand</em>
             </h1>
-            <p>One part-time creative dedicated to your continuous stream of projects.</p>
+            <p>
+              [ RADARCharts / 2026 ]<br />
+              Scroll to enter
+            </p>
           </div>
         </section>
         <section data-reveal className="process-section section-paper">
           <div className="section-grid">
-            <SectionIntro number="01" label="Our studio" />
+            <SectionIntro number="01" label="Born from the heart of RADARCharts" />
           </div>
-          <div className="process-list">
-            {processSteps.map((step) => (
-              <article className="process-row" data-motion="fadeInRight" key={step.number}>
-                <span className="process-number">{step.number}</span>
-                <div>
-                  <h2>{step.title}</h2>
-                  <p>{step.body}</p>
-                </div>
-                <ul>
-                  {step.features.map((feature) => (
-                    <li key={feature}>{feature}</li>
-                  ))}
-                </ul>
-              </article>
-            ))}
+          <div className="motherland-filter-shell" data-filter-state={activeFilter}>
+            <div className="motherland-filter-bar" data-motion="fadeInUp">
+              <span className="muted-label">Tune the signal</span>
+              <div
+                className="motherland-filter-controls"
+                role="group"
+                aria-label="Filter Motherland signals"
+              >
+                {motherlandFilters.map((filter) => (
+                  <button
+                    className="motherland-filter-button"
+                    type="button"
+                    aria-pressed={activeFilter === filter.id}
+                    key={filter.id}
+                    onClick={() => setActiveFilter(filter.id)}
+                  >
+                    {filter.label}
+                  </button>
+                ))}
+              </div>
+              <span className="motherland-filter-status" aria-live="polite">
+                {String(visibleSignals.length).padStart(2, "0")} signals in view
+              </span>
+            </div>
+            <div className="process-list motherland-filter-list is-filtering" key={activeFilter}>
+              {visibleSignals.map((signal, index) => (
+                <article
+                  className="process-row motherland-card"
+                  data-motion="fadeInRight"
+                  key={`${activeFilter}-${signal.number}`}
+                  style={{ animationDelay: `${index * 85}ms` }}
+                >
+                  <span className="process-number">{signal.number}</span>
+                  <div>
+                    <h2>{signal.title}</h2>
+                    <p>{signal.body}</p>
+                  </div>
+                  <ul>
+                    {signal.features.map((feature) => (
+                      <li key={feature}>{feature}</li>
+                    ))}
+                  </ul>
+                </article>
+              ))}
+            </div>
           </div>
         </section>
-        <StatsSection />
+        <section data-reveal className="network-section section-dark">
+          <div className="section-grid">
+            <SectionIntro number="02" label="The network" dark />
+          </div>
+          <div className="network-content" data-motion="fadeInUp">
+            <h2>
+              Stay close
+              <br />
+              <em>to culture.</em>
+            </h2>
+            <div className="network-links">
+              Charts · On The Radar · Magazine · RADARMusic · Spotlights · Platforms · Playlists
+            </div>
+            <p>Her voice is the future in motion.</p>
+          </div>
+        </section>
         <FAQSection />
       </main>
     </AppShell>
@@ -926,24 +1043,95 @@ export function ContactPage() {
       <main>
         <section data-reveal data-animation="zoomIn" className="contact-hero">
           <div className="contact-hero-inner" data-motion="fadeInLeft">
-            <span className="eyebrow">Get in touch</span>
+            <span className="eyebrow">Enter the conversation</span>
             <h1>
               Let’s make
               <br />
               <em>something</em>
               <br />
-              matter.
+              move.
             </h1>
             <p>
-              Pick a plan, submit a job request, and your イメージ will kickoff within 24 hours.
+              Have a release, story, partnership, platform idea, or cultural signal that deserves
+              more room? Tell us what is moving and why it matters now.
             </p>
             <Link className="button-light" to="/contact">
-              Start a job request <Arrow />
+              Submit your signal <Arrow />
             </Link>
           </div>
           <div className="contact-image" data-motion="fadeInRight">
-            <img src="/assets/service-portrait.png" alt="Portrait in a sculptural studio setting" />
+            <img
+              src="/assets/service-portrait.png"
+              alt="Artist portrait for the RADARCharts contact page"
+            />
           </div>
+        </section>
+        <section data-reveal className="contact-form-section section-paper" id="store">
+          <div className="section-grid">
+            <SectionIntro number="01" label="Send the signal" />
+          </div>
+          <form
+            className="contact-form"
+            data-motion="fadeInUp"
+            onSubmit={(event) => event.preventDefault()}
+          >
+            <label>
+              Your name
+              <input name="name" placeholder="Your name" required />
+            </label>
+            <label>
+              Your email
+              <input name="email" type="email" placeholder="Your email" required />
+            </label>
+            <label>
+              Who are you?
+              <select name="role" defaultValue="">
+                <option value="" disabled>
+                  Artist / Manager / Label / Brand / Community / Press / Other
+                </option>
+                <option>Artist</option>
+                <option>Manager</option>
+                <option>Label</option>
+                <option>Brand</option>
+                <option>Community</option>
+                <option>Press</option>
+                <option>Other</option>
+              </select>
+            </label>
+            <label>
+              What is moving?
+              <select name="signal" defaultValue="">
+                <option value="" disabled>
+                  Release / Story / Partnership / Event / Platform idea
+                </option>
+                <option>Release</option>
+                <option>Story</option>
+                <option>Partnership</option>
+                <option>Event</option>
+                <option>Platform idea</option>
+              </select>
+            </label>
+            <label>
+              The clearest link to the signal
+              <input name="link" placeholder="https://" />
+            </label>
+            <label>
+              Tell us what is moving and why now
+              <textarea
+                name="message"
+                rows={5}
+                placeholder="Tell us what is moving and why now"
+                required
+              />
+            </label>
+            <button className="button-dark" type="submit">
+              Send to the RADAR <Arrow />
+            </button>
+            <p className="form-confirmation">
+              Signal received. The RADAR team will review the details and follow up if the fit is
+              right.
+            </p>
+          </form>
         </section>
         <FAQSection dark={false} />
       </main>

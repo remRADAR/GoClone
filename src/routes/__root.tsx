@@ -77,22 +77,22 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "GoClone — Premium Creative Studio" },
+      { title: "RADARCharts by REM — Music is life itself" },
       {
         name: "description",
         content:
-          "A design-forward creative studio for brands that want their next signal to matter.",
+          "RADARCharts by REM is a music and culture platform built to keep the signal visible. Protect the Music. Protect the Fans.",
       },
-      { name: "author", content: "GoClone Studio" },
-      { property: "og:title", content: "GoClone — Premium Creative Studio" },
+      { name: "author", content: "RADARCharts by REM" },
+      { property: "og:title", content: "RADARCharts by REM — Music is life itself" },
       {
         property: "og:description",
         content:
-          "A design-forward creative studio for brands that want their next signal to matter.",
+          "RADARCharts by REM is a music and culture platform built to keep the signal visible. Protect the Music. Protect the Fans.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:site", content: "@goclone" },
+      { name: "twitter:site", content: "@radarcharts" },
     ],
     links: [
       {
