@@ -178,6 +178,7 @@ export function AppShell({ children }: { children: ReactNode }) {
   useEffect(() => {
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const revealTargets = Array.from(document.querySelectorAll<HTMLElement>("[data-reveal]"));
+    document.documentElement.classList.add("reveal-ready");
     if (reduceMotion || !("IntersectionObserver" in window)) {
       revealTargets.forEach((element) => element.classList.add("is-visible"));
       return;
@@ -194,7 +195,10 @@ export function AppShell({ children }: { children: ReactNode }) {
       { rootMargin: "0px 0px -12% 0px", threshold: 0.08 },
     );
     revealTargets.forEach((element) => observer.observe(element));
-    return () => observer.disconnect();
+    return () => {
+      observer.disconnect();
+      document.documentElement.classList.remove("reveal-ready");
+    };
   }, []);
 
   useEffect(() => {
