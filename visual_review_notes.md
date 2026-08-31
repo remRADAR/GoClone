@@ -32,3 +32,7 @@ The browser reached the FAQ region after activating the first contact-page FAQ c
 At 390×844, the home hero reflows to a single-column composition with the logo and Menu control in the header, readable CTA copy, stacked service labels, plus marks, and a large FUEL× wordmark. The about route reflows to a full-bleed hero with the “We are here.” display treatment and metadata section below. The contact route reflows from a split desktop hero into a stacked dark copy block followed by the portrait image, with a full-width CTA. No horizontal overflow was visible in the captured mobile states.
 
 The mobile homepage capture shows the large wordmark approaching the footer note at the bottom edge; this is an intentional editorial overlap in the reference language, but the wordmark will be nudged upward slightly for improved legibility.
+
+## Final breakpoint pass
+
+The final 893×768 desktop capture keeps the complete centered navigation and CEO card visible, matching the reference desktop capture rather than switching to the mobile Menu control. The final mobile capture keeps the Menu control and the lifted FUEL× wordmark now leaves the © 2025 / 19′ metadata legible below it.

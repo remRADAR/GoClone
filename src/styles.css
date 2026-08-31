@@ -1261,7 +1261,7 @@ a:focus-visible .arrow {
   }
 }
 
-@media (max-width: 900px) {
+@media (max-width: 760px) {
   .site-header {
     grid-template-columns: 1fr auto;
     padding: 16px;
