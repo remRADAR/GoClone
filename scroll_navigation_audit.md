@@ -23,3 +23,9 @@ The current GoClone shell already uses an absolute header, which visually matche
 At a 893px viewport after scrolling to approximately 962px, the GoClone runtime reported `--scroll-progress: 0.8745`, two revealed sections out of ten marked `[data-reveal]`, active navigation `Home 01`, and a correctly wired mobile menu control with `aria-controls="primary-navigation"`. The local header scrolls away with the hero, matching the observed reference scroll state rather than remaining sticky. The hero wordmark responds to the scroll-progress variable through a subtle upward parallax transform.
 
 The About route was also checked after navigation. The runtime reported `pathname: /about`, active navigation `About 03`, and one of four route sections initially visible, confirming route-aware navigation state and observer initialization on subpages.
+
+## Supplied effect integration
+
+The services section now uses the supplied sticky-slide pattern adapted to the GoClone palette: all three service rows report `position: sticky`, with staggered top offsets and a mobile fallback to normal flow. The services lead title uses split left/right text parts that resolve into place when its parent reveal becomes visible. The runtime reports `prefers-reduced-motion: false` in the normal browser state; the CSS reduced-motion block neutralizes both reveal transforms and split-title transforms when requested.
+
+The 390×844 mobile capture remains clean after the sticky-slide integration: the Menu control, hero CTA, service labels, wordmark, and footer metadata stay within the viewport with no clipping. Sticky service positioning is disabled on mobile through the responsive override, so the slide content remains normal-flow and readable.

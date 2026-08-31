@@ -423,15 +423,23 @@ function ServicesSection() {
         <SectionIntro number="03" label="Premium services" dark />
       </div>
       <div className="services-lead">
-        <h2>
-          Design-driven studio delivering the structured visuals, refined digital system, and
-          high-impact brand experiences <em>shaped by aesthetics &amp; Fuel®.</em>
+        <h2
+          className="split-title"
+          aria-label="Design-driven studio delivering the structured visuals, refined digital system, and high-impact brand experiences shaped by aesthetics & Fuel®."
+        >
+          <span className="text-part left">
+            Design-driven studio delivering the structured visuals,
+          </span>
+          <span className="text-part right">
+            refined digital system, and high-impact brand experiences
+          </span>{" "}
+          <em>shaped by aesthetics &amp; Fuel®.</em>
         </h2>
         <Link className="text-link" to="/about">
           Explore more <Arrow />
         </Link>
       </div>
-      <div className="service-list">
+      <div className="service-list service-stack">
         {services.map((service) => (
           <article className="service-row" key={service.number}>
             <div className="service-index">{service.number}</div>
