@@ -1,5 +1,5 @@
-import { useState, type ReactNode } from "react";
-import { Link } from "@tanstack/react-router";
+import { useEffect, useState, type ReactNode } from "react";
+import { Link, useLocation } from "@tanstack/react-router";
 
 const navItems = [
   { label: "Home", index: "01", to: "/" as const },
@@ -85,15 +85,26 @@ function PlusMark() {
 
 export function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const location = useLocation();
 
   return (
     <header className="site-header">
       <Link to="/" className="brand-lockup" aria-label="GoClone home">
         <img src="/assets/fuel-logo.png" alt="Fuel" />
       </Link>
-      <nav className={`main-nav ${menuOpen ? "is-open" : ""}`} aria-label="Primary navigation">
+      <nav
+        id="primary-navigation"
+        className={`main-nav ${menuOpen ? "is-open" : ""}`}
+        aria-label="Primary navigation"
+      >
         {navItems.map((item) => (
-          <Link key={item.to} to={item.to} onClick={() => setMenuOpen(false)}>
+          <Link
+            key={item.to}
+            to={item.to}
+            className={location.pathname === item.to ? "is-active" : ""}
+            aria-current={location.pathname === item.to ? "page" : undefined}
+            onClick={() => setMenuOpen(false)}
+          >
             <span>{item.label}</span>
             <small>{item.index}</small>
           </Link>
@@ -164,6 +175,50 @@ export function Footer() {
 }
 
 export function AppShell({ children }: { children: ReactNode }) {
+  useEffect(() => {
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const revealTargets = Array.from(document.querySelectorAll<HTMLElement>("[data-reveal]"));
+    if (reduceMotion || !("IntersectionObserver" in window)) {
+      revealTargets.forEach((element) => element.classList.add("is-visible"));
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) =>
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+            observer.unobserve(entry.target);
+          }
+        }),
+      { rootMargin: "0px 0px -12% 0px", threshold: 0.08 },
+    );
+    revealTargets.forEach((element) => observer.observe(element));
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduceMotion) return;
+    let frame = 0;
+    const updateScrollProgress = () => {
+      frame = 0;
+      document.documentElement.style.setProperty(
+        "--scroll-progress",
+        String(Math.min(window.scrollY / Math.max(window.innerHeight, 1), 1)),
+      );
+    };
+    const onScroll = () => {
+      if (!frame) frame = window.requestAnimationFrame(updateScrollProgress);
+    };
+    updateScrollProgress();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      if (frame) window.cancelAnimationFrame(frame);
+    };
+  }, []);
+
   return (
     <div className="site-shell">
       <Header />
@@ -175,7 +230,7 @@ export function AppShell({ children }: { children: ReactNode }) {
 
 function Hero() {
   return (
-    <section className="hero hero-home">
+    <section data-reveal className="hero hero-home">
       <div className="hero-grain" />
       <div className="hero-copy">
         <p>
@@ -241,7 +296,7 @@ function SectionIntro({
 
 function AboutSection() {
   return (
-    <section className="about-section section-dark">
+    <section data-reveal className="about-section section-dark">
       <div className="section-grid">
         <SectionIntro number="01" label="About us" dark />
         <div className="about-statement">
@@ -287,7 +342,7 @@ function AboutSection() {
 
 function PortfolioSection() {
   return (
-    <section className="portfolio-section section-paper">
+    <section data-reveal className="portfolio-section section-paper">
       <div className="section-grid">
         <SectionIntro number="02" label="Portfolio" />
       </div>
@@ -363,7 +418,7 @@ function ServicesSection() {
   ];
 
   return (
-    <section className="services-section section-dark">
+    <section data-reveal className="services-section section-dark">
       <div className="section-grid">
         <SectionIntro number="03" label="Premium services" dark />
       </div>
@@ -436,7 +491,7 @@ function PricingSection() {
   ];
 
   return (
-    <section className="pricing-section section-paper">
+    <section data-reveal className="pricing-section section-paper">
       <div className="section-grid">
         <SectionIntro number="04" label="Pricing" />
       </div>
@@ -472,7 +527,7 @@ function PricingSection() {
 
 function TestimonialSection() {
   return (
-    <section className="testimonial-section section-dark">
+    <section data-reveal className="testimonial-section section-dark">
       <div className="section-grid">
         <SectionIntro number="05" label="Testimonial" dark />
       </div>
@@ -527,7 +582,7 @@ function TestimonialSection() {
 function ArchiveSection() {
   const entries = ["Outside", "Juvede", "Zaine", "Wall Out", "Geaton", "Skate"];
   return (
-    <section className="archive-section section-paper">
+    <section data-reveal className="archive-section section-paper">
       <div className="section-grid">
         <SectionIntro number="06" label="Archive" />
       </div>
@@ -580,7 +635,7 @@ function StatsSection() {
     ],
   ];
   return (
-    <section className="stats-section section-dark">
+    <section data-reveal className="stats-section section-dark">
       <div className="section-grid">
         <SectionIntro number="07" label="Stats" dark />
       </div>
@@ -605,7 +660,7 @@ function ArticlesSection() {
     ["004", "Flowers Love", "Gardening"],
   ];
   return (
-    <section className="articles-section section-paper">
+    <section data-reveal className="articles-section section-paper">
       <div className="section-grid">
         <SectionIntro number="08" label="Article" />
       </div>
@@ -626,7 +681,7 @@ function ArticlesSection() {
 export function FAQSection({ dark = true }: { dark?: boolean }) {
   const [open, setOpen] = useState<number | null>(null);
   return (
-    <section className={`faq-section ${dark ? "section-dark" : "section-paper"}`}>
+    <section data-reveal className={`faq-section ${dark ? "section-dark" : "section-paper"}`}>
       <div className="section-grid">
         <SectionIntro number="09" label="Frequently asked questions" dark={dark} />
       </div>
@@ -682,7 +737,7 @@ export function PortfolioPage() {
   return (
     <AppShell>
       <main>
-        <section className="subpage-hero portfolio-hero">
+        <section data-reveal className="subpage-hero portfolio-hero">
           <div className="subpage-hero-copy">
             <span className="eyebrow">Latest (07)</span>
             <h1>
@@ -693,7 +748,7 @@ export function PortfolioPage() {
             <p>A curated collection of structured visuals and modern digital systems.</p>
           </div>
         </section>
-        <section className="portfolio-index section-paper">
+        <section data-reveal className="portfolio-index section-paper">
           <div className="section-grid">
             <SectionIntro number="01" label="Portfolio" />
           </div>
@@ -746,7 +801,7 @@ export function AboutPage() {
   return (
     <AppShell>
       <main>
-        <section className="subpage-hero about-hero">
+        <section data-reveal className="subpage-hero about-hero">
           <div className="subpage-hero-copy">
             <span className="eyebrow">Our studio</span>
             <h1>
@@ -757,7 +812,7 @@ export function AboutPage() {
             <p>One part-time creative dedicated to your continuous stream of projects.</p>
           </div>
         </section>
-        <section className="process-section section-paper">
+        <section data-reveal className="process-section section-paper">
           <div className="section-grid">
             <SectionIntro number="01" label="Our studio" />
           </div>
@@ -789,7 +844,7 @@ export function ContactPage() {
   return (
     <AppShell>
       <main>
-        <section className="contact-hero">
+        <section data-reveal className="contact-hero">
           <div className="contact-hero-inner">
             <span className="eyebrow">Get in touch</span>
             <h1>

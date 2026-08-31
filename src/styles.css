@@ -53,6 +53,19 @@ img {
   overflow: hidden;
   background: var(--ink);
 }
+[data-reveal] {
+  opacity: 0;
+  transform: translate3d(0, 28px, 0);
+  transition:
+    opacity 700ms var(--ease-out),
+    transform 900ms var(--ease-out);
+}
+[data-reveal].is-visible,
+.hero[data-reveal],
+.subpage-hero[data-reveal] {
+  opacity: 1;
+  transform: none;
+}
 .site-header {
   align-items: start;
   display: grid;
@@ -89,9 +102,22 @@ img {
 }
 .main-nav a:hover,
 .main-nav a:focus-visible,
+.main-nav a.is-active,
 .footer-nav a:hover,
 .footer-nav a:focus-visible {
   color: var(--acid);
+}
+.main-nav a.is-active::after {
+  background: var(--acid);
+  bottom: -7px;
+  content: "";
+  height: 1px;
+  left: 0;
+  position: absolute;
+  right: 15px;
+}
+.main-nav a {
+  position: relative;
 }
 .main-nav small,
 .footer-nav small {
@@ -269,6 +295,8 @@ a:focus-visible .arrow {
   bottom: 1.3%;
   left: 25.5%;
   position: absolute;
+  transform: translate3d(0, calc(var(--scroll-progress, 0) * -22px), 0);
+  transition: transform 120ms linear;
   width: 72%;
   z-index: 2;
 }
@@ -1282,6 +1310,10 @@ a:focus-visible .arrow {
     animation-iteration-count: 1 !important;
     scroll-behavior: auto !important;
     transition-duration: 0.01ms !important;
+  }
+  [data-reveal] {
+    opacity: 1;
+    transform: none;
   }
 }
 
