@@ -1,5 +1,6 @@
 import { useEffect, useState, type ReactNode } from "react";
 import { Link, useLocation } from "@tanstack/react-router";
+import "animate.css";
 
 const navItems = [
   { label: "Home", index: "01", to: "/" as const },
@@ -81,6 +82,13 @@ function PlusMark() {
       +
     </span>
   );
+}
+
+type RevealAnimation = "fadeInUp" | "fadeIn" | "zoomIn";
+
+function applyRevealAnimation(element: HTMLElement) {
+  const animation = (element.dataset.animation as RevealAnimation | undefined) ?? "fadeInUp";
+  element.classList.add("animate__animated", `animate__${animation}`, "is-visible");
 }
 
 export function Header() {
@@ -179,16 +187,17 @@ export function AppShell({ children }: { children: ReactNode }) {
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const revealTargets = Array.from(document.querySelectorAll<HTMLElement>("[data-reveal]"));
     document.documentElement.classList.add("reveal-ready");
+
     if (reduceMotion || !("IntersectionObserver" in window)) {
-      revealTargets.forEach((element) => element.classList.add("is-visible"));
-      return;
+      revealTargets.forEach(applyRevealAnimation);
+      return () => document.documentElement.classList.remove("reveal-ready");
     }
 
     const observer = new IntersectionObserver(
       (entries) =>
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            entry.target.classList.add("is-visible");
+            applyRevealAnimation(entry.target as HTMLElement);
             observer.unobserve(entry.target);
           }
         }),
@@ -234,7 +243,7 @@ export function AppShell({ children }: { children: ReactNode }) {
 
 function Hero() {
   return (
-    <section data-reveal className="hero hero-home">
+    <section data-reveal data-animation="zoomIn" className="hero hero-home">
       <div className="hero-grain" />
       <div className="hero-copy">
         <p>
@@ -749,7 +758,7 @@ export function PortfolioPage() {
   return (
     <AppShell>
       <main>
-        <section data-reveal className="subpage-hero portfolio-hero">
+        <section data-reveal data-animation="zoomIn" className="subpage-hero portfolio-hero">
           <div className="subpage-hero-copy">
             <span className="eyebrow">Latest (07)</span>
             <h1>
@@ -813,7 +822,7 @@ export function AboutPage() {
   return (
     <AppShell>
       <main>
-        <section data-reveal className="subpage-hero about-hero">
+        <section data-reveal data-animation="zoomIn" className="subpage-hero about-hero">
           <div className="subpage-hero-copy">
             <span className="eyebrow">Our studio</span>
             <h1>
@@ -856,7 +865,7 @@ export function ContactPage() {
   return (
     <AppShell>
       <main>
-        <section data-reveal className="contact-hero">
+        <section data-reveal data-animation="zoomIn" className="contact-hero">
           <div className="contact-hero-inner">
             <span className="eyebrow">Get in touch</span>
             <h1>
