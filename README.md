@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # GoClone
 
 GoClone is a self-contained, responsive editorial agency and portfolio experience built from the Lovable TanStack Start/Vite/React/TypeScript scaffold and refined against the authorized Fuel reference at <https://fuel.framer.website/>.
