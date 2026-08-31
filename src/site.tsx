@@ -1,5 +1,6 @@
 import { useEffect, useState, type ReactNode } from "react";
 import { Link, useLocation } from "@tanstack/react-router";
+import { ArrowUp, Menu, Minus, Plus, X } from "lucide-react";
 import "animate.css";
 
 const navItems = [
@@ -71,24 +72,30 @@ const faqs = [
 function Arrow() {
   return (
     <span className="arrow" aria-hidden="true">
-      ↗
+      <ArrowUp size={15} strokeWidth={1.5} />
     </span>
   );
 }
-
 function PlusMark() {
   return (
     <span className="plus-mark" aria-hidden="true">
-      +
+      <Plus size={19} strokeWidth={1.25} />
     </span>
   );
 }
-
-type RevealAnimation = "fadeInUp" | "fadeIn" | "zoomIn";
-
+type RevealAnimation =
+  "fadeInUp" | "fadeIn" | "fadeInDown" | "fadeInLeft" | "fadeInRight" | "zoomIn";
+function applyMotionAnimation(element: HTMLElement, animation: RevealAnimation) {
+  element.classList.add("animate__animated", `animate__${animation}`);
+}
 function applyRevealAnimation(element: HTMLElement) {
   const animation = (element.dataset.animation as RevealAnimation | undefined) ?? "fadeInUp";
-  element.classList.add("animate__animated", `animate__${animation}`, "is-visible");
+  applyMotionAnimation(element, animation);
+  element.classList.add("is-visible");
+  element.querySelectorAll<HTMLElement>("[data-motion]").forEach((child) => {
+    const childAnimation = (child.dataset.motion as RevealAnimation | undefined) ?? "fadeInUp";
+    applyMotionAnimation(child, childAnimation);
+  });
 }
 
 export function Header() {
@@ -126,7 +133,7 @@ export function Header() {
           <small>CEO</small>
         </span>
         <span className="card-corner" aria-hidden="true">
-          ↗
+          <ArrowUp size={14} strokeWidth={1.5} />
         </span>
       </Link>
       <button
@@ -134,10 +141,15 @@ export function Header() {
         className="menu-toggle"
         aria-expanded={menuOpen}
         aria-controls="primary-navigation"
+        aria-label={menuOpen ? "Close navigation menu" : "Open navigation menu"}
         onClick={() => setMenuOpen((open) => !open)}
       >
-        <span>{menuOpen ? "Close" : "Menu"}</span>
-        <span className="menu-dot" aria-hidden="true" />
+        <span className="menu-label" aria-hidden="true">
+          {menuOpen ? "Close" : "Menu"}
+        </span>
+        <span className="menu-icon" aria-hidden="true">
+          {menuOpen ? <X size={16} strokeWidth={1.5} /> : <Menu size={16} strokeWidth={1.5} />}
+        </span>
       </button>
     </header>
   );
@@ -146,9 +158,9 @@ export function Header() {
 export function Footer() {
   return (
     <footer className="site-footer">
-      <div className="footer-top section-grid">
+      <div className="footer-top section-grid" data-reveal data-animation="fadeInUp">
         <span className="section-kicker">(10)</span>
-        <div className="footer-cta">
+        <div className="footer-cta" data-motion="fadeInUp">
           <p className="eyebrow">Let’s work together</p>
           <a className="footer-email" href="mailto:sayhi@goclone.studio">
             sayhi@goclone.studio <Arrow />
@@ -158,13 +170,16 @@ export function Footer() {
           </Link>
         </div>
       </div>
-      <div className="footer-marquee" aria-hidden="true">
+      <div className="footer-marquee" data-motion="fadeIn" aria-hidden="true">
         <span>We are faster, better and closer&nbsp;—&nbsp;</span>
         <span>We are faster, better and closer&nbsp;—&nbsp;</span>
       </div>
       <div className="footer-bottom">
         <Link to="/" className="footer-wordmark">
-          FUEL<span>×</span>
+          FUEL
+          <span className="wordmark-mark" aria-hidden="true">
+            <X size={19} strokeWidth={1.5} />
+          </span>
         </Link>
         <nav className="footer-nav" aria-label="Footer navigation">
           {navItems.map((item) => (
@@ -186,11 +201,11 @@ export function AppShell({ children }: { children: ReactNode }) {
   useEffect(() => {
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const revealTargets = Array.from(document.querySelectorAll<HTMLElement>("[data-reveal]"));
-    document.documentElement.classList.add("reveal-ready");
+    document.documentElement.classList.add("reveal-ready", "motion-ready");
 
     if (reduceMotion || !("IntersectionObserver" in window)) {
       revealTargets.forEach(applyRevealAnimation);
-      return () => document.documentElement.classList.remove("reveal-ready");
+      return () => document.documentElement.classList.remove("reveal-ready", "motion-ready");
     }
 
     const observer = new IntersectionObserver(
@@ -206,29 +221,46 @@ export function AppShell({ children }: { children: ReactNode }) {
     revealTargets.forEach((element) => observer.observe(element));
     return () => {
       observer.disconnect();
-      document.documentElement.classList.remove("reveal-ready");
+      document.documentElement.classList.remove("reveal-ready", "motion-ready");
     };
   }, []);
 
   useEffect(() => {
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (reduceMotion) return;
+
+    const stackItems = Array.from(document.querySelectorAll<HTMLElement>("[data-stack-item]"));
     let frame = 0;
-    const updateScrollProgress = () => {
+    const updateScrollState = () => {
       frame = 0;
       document.documentElement.style.setProperty(
         "--scroll-progress",
         String(Math.min(window.scrollY / Math.max(window.innerHeight, 1), 1)),
       );
+
+      stackItems.forEach((item) => {
+        const stickyTop = Number.parseFloat(getComputedStyle(item).top) || 0;
+        const rect = item.getBoundingClientRect();
+        const stackDepth = Math.max(
+          0,
+          Math.min(1, (stickyTop - rect.top) / Math.max(item.offsetHeight * 0.55, 1)),
+        );
+        item.style.setProperty("--stack-depth", stackDepth.toFixed(3));
+        item.classList.toggle("is-stuck", rect.top <= stickyTop + 1 && rect.bottom > stickyTop + 1);
+      });
     };
     const onScroll = () => {
-      if (!frame) frame = window.requestAnimationFrame(updateScrollProgress);
+      if (!frame) frame = window.requestAnimationFrame(updateScrollState);
     };
-    updateScrollProgress();
+    updateScrollState();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => {
       window.removeEventListener("scroll", onScroll);
       if (frame) window.cancelAnimationFrame(frame);
+      stackItems.forEach((item) => {
+        item.style.removeProperty("--stack-depth");
+        item.classList.remove("is-stuck");
+      });
     };
   }, []);
 
@@ -245,7 +277,7 @@ function Hero() {
   return (
     <section data-reveal data-animation="zoomIn" className="hero hero-home">
       <div className="hero-grain" />
-      <div className="hero-copy">
+      <div className="hero-copy" data-motion="fadeInUp">
         <p>
           Pick a plan, submit a job request,
           <br />
@@ -257,7 +289,7 @@ function Hero() {
           Explore now <Arrow />
         </Link>
       </div>
-      <div className="hero-services">
+      <div className="hero-services" data-motion="fadeIn">
         <span>01/</span>
         <span>Strategy</span>
         <span>Videography</span>
@@ -272,7 +304,7 @@ function Hero() {
       <div className="hero-plus plus-three">
         <PlusMark />
       </div>
-      <div className="hero-wordmark">
+      <div className="hero-wordmark" data-motion="fadeIn">
         <img src="/assets/footer-wordmark.png" alt="Fuel" />
       </div>
       <div className="hero-footnote">
@@ -296,7 +328,7 @@ function SectionIntro({
   dark?: boolean;
 }) {
   return (
-    <div className={`section-intro ${dark ? "on-dark" : ""}`}>
+    <div className={`section-intro ${dark ? "on-dark" : ""}`} data-motion="fadeInDown">
       <div className="section-intro-meta">
         <span>({number})</span>
         <span>({label})</span>
@@ -312,7 +344,7 @@ function AboutSection() {
     <section data-reveal className="about-section section-dark">
       <div className="section-grid">
         <SectionIntro number="01" label="About us" dark />
-        <div className="about-statement">
+        <div className="about-statement" data-motion="fadeInUp">
           <p className="display-copy">
             Design-forward impressive agency crafting bold visuals, structured layouts, and
             high-impact digital 3D Swiss inspired by modern aesthetics<span>®</span>.
@@ -359,7 +391,7 @@ function PortfolioSection() {
       <div className="section-grid">
         <SectionIntro number="02" label="Portfolio" />
       </div>
-      <div className="portfolio-heading">
+      <div className="portfolio-heading" data-motion="zoomIn">
         <h2>
           Selected
           <br />
@@ -372,7 +404,7 @@ function PortfolioSection() {
           <ProjectCard key={project.number} project={project} />
         ))}
       </div>
-      <div className="section-action">
+      <div className="section-action" data-motion="fadeInUp">
         <Link className="button-outline" to="/contact">
           Join us now <Arrow />
         </Link>
@@ -386,8 +418,8 @@ function PortfolioSection() {
 
 function ProjectCard({ project }: { project: (typeof projects)[number] }) {
   return (
-    <Link className="project-card" to="/work/portfolio">
-      <div className="project-image">
+    <Link className="project-card" data-motion="fadeInUp" to="/work/portfolio">
+      <div className="project-image" data-motion="zoomIn">
         <img src={project.image} alt="" loading="lazy" />
         <span className="project-arrow">
           <Arrow />
@@ -435,7 +467,7 @@ function ServicesSection() {
       <div className="section-grid">
         <SectionIntro number="03" label="Premium services" dark />
       </div>
-      <div className="services-lead">
+      <div className="services-lead" data-motion="fadeInUp">
         <h2
           className="split-title"
           aria-label="Design-driven studio delivering the structured visuals, refined digital system, and high-impact brand experiences shaped by aesthetics & Fuel®."
@@ -454,7 +486,12 @@ function ServicesSection() {
       </div>
       <div className="service-list service-stack">
         {services.map((service) => (
-          <article className="service-row" key={service.number}>
+          <article
+            className="service-row"
+            data-motion="fadeInRight"
+            data-stack-item
+            key={service.number}
+          >
             <div className="service-index">{service.number}</div>
             <img src={service.image} alt="" loading="lazy" />
             <div className="service-copy">
@@ -518,7 +555,7 @@ function PricingSection() {
       </div>
       <div className="pricing-grid">
         {plans.map((plan) => (
-          <article className="pricing-card" key={plan.name}>
+          <article className="pricing-card" data-motion="fadeInUp" key={plan.name}>
             <div className="pricing-card-top">
               <span className="muted-label">{plan.name}</span>
               <p>{plan.description}</p>
@@ -552,7 +589,7 @@ function TestimonialSection() {
       <div className="section-grid">
         <SectionIntro number="05" label="Testimonial" dark />
       </div>
-      <div className="testimonial-layout">
+      <div className="testimonial-layout" data-motion="fadeInUp">
         <div className="testimonial-quote">
           “Fuel delivered with clarity. Their structured workflow and fast turnaround made our
           redesign launch seamless. They’ve become our trusted partner for every major creative
@@ -619,7 +656,7 @@ function ArchiveSection() {
       </div>
       <div className="archive-list">
         {entries.map((entry, index) => (
-          <div key={entry} className="archive-entry">
+          <div key={entry} className="archive-entry" data-motion="fadeInLeft">
             <span>{index % 2 === 0 ? "2025" : "2024"}</span>
             <strong>{entry}</strong>
             <small>
@@ -662,7 +699,7 @@ function StatsSection() {
       </div>
       <div className="stats-grid">
         {stats.map(([value, label, body]) => (
-          <div className="stat" key={label}>
+          <div className="stat" data-motion="fadeInUp" key={label}>
             <b>{value}</b>
             <strong>{label}</strong>
             <p>{body}</p>
@@ -687,7 +724,7 @@ function ArticlesSection() {
       </div>
       <div className="article-list">
         {articles.map(([number, title, category]) => (
-          <Link to="/work/portfolio" className="article-row" key={number}>
+          <Link to="/work/portfolio" className="article-row" data-motion="fadeInRight" key={number}>
             <span>{number}</span>
             <strong>{title}</strong>
             <em>{category}</em>
@@ -707,22 +744,32 @@ export function FAQSection({ dark = true }: { dark?: boolean }) {
         <SectionIntro number="09" label="Frequently asked questions" dark={dark} />
       </div>
       <div className="faq-layout">
-        <div className="faq-media">
+        <div className="faq-media" data-motion="fadeInLeft">
           <img src="/assets/faq-portrait.png" alt="Portrait with a soft blue flower" />
           <a href="https://www.youtube.com/" target="_blank" rel="noreferrer" className="showreel">
             Play showreel <Arrow />
           </a>
         </div>
-        <div className="faq-list">
+        <div className="faq-list" data-motion="fadeInRight">
           {faqs.map((faq, index) => (
-            <div className={`faq-item ${open === index ? "is-open" : ""}`} key={faq.question}>
+            <div
+              className={`faq-item ${open === index ? "is-open" : ""}`}
+              data-motion="fadeInUp"
+              key={faq.question}
+            >
               <button
                 type="button"
                 onClick={() => setOpen(open === index ? null : index)}
                 aria-expanded={open === index}
               >
                 <span>{faq.question}</span>
-                <span aria-hidden="true">{open === index ? "−" : "+"}</span>
+                <span className="faq-toggle-icon" aria-hidden="true">
+                  {open === index ? (
+                    <Minus size={18} strokeWidth={1.5} />
+                  ) : (
+                    <Plus size={18} strokeWidth={1.5} />
+                  )}
+                </span>
               </button>
               <div className="faq-answer">
                 <p>{faq.answer}</p>
@@ -839,7 +886,7 @@ export function AboutPage() {
           </div>
           <div className="process-list">
             {processSteps.map((step) => (
-              <article className="process-row" key={step.number}>
+              <article className="process-row" data-motion="fadeInRight" key={step.number}>
                 <span className="process-number">{step.number}</span>
                 <div>
                   <h2>{step.title}</h2>
@@ -866,7 +913,7 @@ export function ContactPage() {
     <AppShell>
       <main>
         <section data-reveal data-animation="zoomIn" className="contact-hero">
-          <div className="contact-hero-inner">
+          <div className="contact-hero-inner" data-motion="fadeInLeft">
             <span className="eyebrow">Get in touch</span>
             <h1>
               Let’s make
@@ -882,7 +929,7 @@ export function ContactPage() {
               Start a job request <Arrow />
             </Link>
           </div>
-          <div className="contact-image">
+          <div className="contact-image" data-motion="fadeInRight">
             <img src="/assets/service-portrait.png" alt="Portrait in a sculptural studio setting" />
           </div>
         </section>
