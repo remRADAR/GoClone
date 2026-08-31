@@ -229,6 +229,7 @@ export function AppShell({ children }: { children: ReactNode }) {
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (reduceMotion) return;
 
+    const stackContainer = document.querySelector<HTMLElement>("[data-stack-container]");
     const stackItems = Array.from(document.querySelectorAll<HTMLElement>("[data-stack-item]"));
     let frame = 0;
     const updateScrollState = () => {
@@ -238,14 +239,23 @@ export function AppShell({ children }: { children: ReactNode }) {
         String(Math.min(window.scrollY / Math.max(window.innerHeight, 1), 1)),
       );
 
-      stackItems.forEach((item) => {
+      const stackRect = stackContainer?.getBoundingClientRect();
+      const stackStart = stackRect ? stackRect.top + window.scrollY : 0;
+      const stackTravel = Math.max(
+        (stackContainer?.offsetHeight ?? window.innerHeight) - window.innerHeight,
+        1,
+      );
+      const stackProgress = Math.max(0, Math.min(1, (window.scrollY - stackStart) / stackTravel));
+      const cardHeight = Math.max(stackItems[0]?.offsetHeight ?? window.innerHeight, 1);
+      const stackScroll = Math.max(0, window.scrollY - stackStart);
+      stackContainer?.style.setProperty("--stack-progress", stackProgress.toFixed(3));
+
+      stackItems.forEach((item, index) => {
         const stickyTop = Number.parseFloat(getComputedStyle(item).top) || 0;
         const rect = item.getBoundingClientRect();
-        const stackDepth = Math.max(
-          0,
-          Math.min(1, (stickyTop - rect.top) / Math.max(item.offsetHeight * 0.55, 1)),
-        );
-        item.style.setProperty("--stack-depth", stackDepth.toFixed(3));
+        const cardProgress = Math.max(0, Math.min(1, stackScroll / cardHeight - index));
+        item.style.setProperty("--card-progress", cardProgress.toFixed(3));
+        item.style.setProperty("--stack-depth", cardProgress.toFixed(3));
         item.classList.toggle("is-stuck", rect.top <= stickyTop + 1 && rect.bottom > stickyTop + 1);
       });
     };
@@ -257,7 +267,9 @@ export function AppShell({ children }: { children: ReactNode }) {
     return () => {
       window.removeEventListener("scroll", onScroll);
       if (frame) window.cancelAnimationFrame(frame);
+      stackContainer?.style.removeProperty("--stack-progress");
       stackItems.forEach((item) => {
+        item.style.removeProperty("--card-progress");
         item.style.removeProperty("--stack-depth");
         item.classList.remove("is-stuck");
       });
@@ -484,7 +496,7 @@ function ServicesSection() {
           Explore more <Arrow />
         </Link>
       </div>
-      <div className="service-list service-stack">
+      <div className="service-list service-stack" data-stack-container>
         {services.map((service) => (
           <article
             className="service-row"
@@ -493,8 +505,8 @@ function ServicesSection() {
             key={service.number}
           >
             <div className="service-index">{service.number}</div>
-            <img src={service.image} alt="" loading="lazy" />
-            <div className="service-copy">
+            <img src={service.image} alt="" loading="lazy" data-motion="fadeIn" />
+            <div className="service-copy" data-motion="fadeInUp">
               <h3>{service.title}</h3>
               <span>{service.label}</span>
               <p>{service.body}</p>
