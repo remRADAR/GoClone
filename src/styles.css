@@ -2453,3 +2453,32 @@ a:focus-visible .arrow {
     padding-left: 0;
   }
 }
+.hero-signal {
+  bottom: 15%;
+  display: grid;
+  gap: 4px;
+  left: 21%;
+  position: absolute;
+  z-index: 2;
+}
+.hero-signal span {
+  font-family: monospace;
+  font-size: 10px;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+.hero-signal span:last-child {
+  color: var(--acid);
+}
+.about-columns {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+@media (max-width: 680px) {
+  .hero-signal {
+    bottom: 15%;
+    left: 16px;
+  }
+  .hero-signal span {
+    font-size: 9px;
+  }
+}

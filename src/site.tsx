@@ -28,30 +28,30 @@ const footerLinks = [
 const projects = [
   {
     number: "01",
-    title: "The next voice is already here",
-    category: "Discovery",
+    title: "TulaPRO doubles down with BADBOY II",
+    category: "On The Radar",
     year: "2026",
     image: "/assets/project-vellfire.png",
   },
   {
     number: "02",
-    title: "Protect the Music",
-    category: "RADAR point of view",
+    title: "FeyoTheGenius embraces the night",
+    category: "RADARMusic",
     year: "2026",
     image: "/assets/project-dunwill.png",
   },
   {
     number: "03",
-    title: "Culture in motion",
-    category: "Motherland",
+    title: "AfroCamp rewrites the underground",
+    category: "Culture",
     year: "2026",
     image: "/assets/project-noara.png",
   },
   {
     number: "04",
-    title: "Moov Different",
-    category: "RADARMusic",
-    year: "2025",
+    title: "Mamuzo enters a new chapter",
+    category: "Discovery",
+    year: "2026",
     image: "/assets/project-nike.png",
   },
 ];
@@ -322,13 +322,9 @@ function Hero() {
           Enter the RADAR <Arrow />
         </Link>
       </div>
-      <div className="hero-services" data-motion="fadeIn">
-        <span>Artists</span>
-        <span>Makama</span>
-        <span>Odenose</span>
-        <span>KEASUNGS</span>
-        <span>Moelogo</span>
-        <span>TELMAN</span>
+      <div className="hero-signal" data-motion="fadeIn">
+        <span>Music / Culture / Discovery</span>
+        <span>Keep the signal visible.</span>
       </div>
       <div className="hero-plus plus-one">
         <PlusMark />
@@ -344,9 +340,9 @@ function Hero() {
         <small>by REM</small>
       </div>
       <div className="hero-footnote">
-        <span>01 / 05</span>
+        <span>RADARCharts / REM</span>
         <span className="tick-line" />
-        <span>TELMAN — Moov Different</span>
+        <span>Protecting The Music</span>
       </div>
     </section>
   );
@@ -382,38 +378,23 @@ function AboutSection() {
         <SectionIntro number="01" label="About the movement" dark />
         <div className="about-statement" data-motion="fadeInUp">
           <p className="display-copy">
-            A radar for
+            Protecting the music.
             <br />
-            <em>culture in motion.</em>
+            <em>Keeping the signal visible.</em>
           </p>
           <div className="about-columns">
             <div>
-              <span className="muted-label">Find the signal</span>
-              <p>
-                We look beyond the obvious and make room for the artists moving culture forward.
-              </p>
+              <span className="muted-label">What we follow</span>
+              <p>Artists, releases, scenes, ideas, and communities shaping what comes next.</p>
             </div>
             <div>
-              <span className="muted-label">Give it context</span>
-              <p>
-                A release is never just a release. We connect the sound to the story, the scene, and
-                the people behind it.
-              </p>
-            </div>
-            <div>
-              <span className="muted-label">Protect the connection</span>
-              <p>
-                Culture is participation, not decoration. RADARCharts brings artists, fans, and
-                partners closer together.
-              </p>
+              <span className="muted-label">What we build</span>
+              <p>Charts, stories, playlists, distribution, and spaces where culture can move.</p>
             </div>
           </div>
-          <p className="about-closing">
-            From the first listen to the full story, RADARCharts brings music and culture closer
-            together.
-          </p>
+          <p className="about-closing">RADARCharts is a music and culture platform by REM.</p>
           <Link className="text-link" to="/about">
-            Enter Motherland <Arrow />
+            Discover Motherland <Arrow />
           </Link>
         </div>
       </div>
@@ -433,14 +414,12 @@ function PortfolioSection() {
           <br />
           <em>now.</em>
         </h2>
-        <p>
-          The RADAR is always listening. Explore the artists, tracks, releases, and cultural moments
-          currently carrying the signal forward.
-        </p>
+        <p>The latest artists, releases, and cultural moments carrying the signal forward.</p>
       </div>
       <div className="chart-lead" data-motion="fadeInUp">
         <strong>TOP 25</strong>
-        <p>The current RADARCharts ranking of the music and voices shaping the conversation.</p>
+        <p>A clear pulse on the music and voices shaping the conversation.</p>
+
         <span className="chart-groups">
           The front line · Rising frequency · Across the map · Deep signal · Worth another listen
         </span>
@@ -755,7 +734,7 @@ function ArticlesSection() {
     ["001", "The sound of the next room", "Discovery"],
     ["002", "Protect the Music", "RADAR point of view"],
     ["003", "Motherland: voices that move culture", "Motherland"],
-    ["004", "Moov Different", "RADARMusic"],
+    ["004", "RADARMusic for independent artists", "RADARMusic"],
   ];
   return (
     <section data-reveal className="articles-section section-paper">
